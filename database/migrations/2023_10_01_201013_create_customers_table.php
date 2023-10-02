@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('address');
             $table->string('city');
+            $table->string('state');
             $table->string('postal_code');
             $table->timestamps();
         });
