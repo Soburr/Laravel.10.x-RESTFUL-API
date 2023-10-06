@@ -25,14 +25,14 @@ class StoreCustomerRequest extends FormRequest
            'address' => ['required'],
            'city' => ['required'],
            'state' => ['required'],
-           'postalCode' => ['required']
+           'postal_code' => ['required']
 
         ];
     }
 
-    protected function prepareForValidation() {
-        $this->merge([
-            'postal_code' => $this->postalCode
-        ]);
-    }
+    // protected function prepareForValidation() {
+    //     $this->merge([
+    //         'postal_code' => $this->postalCode
+    //     ]);
+    // }
 }

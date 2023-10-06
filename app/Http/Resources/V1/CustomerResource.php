@@ -17,14 +17,12 @@ class CustomerResource extends JsonResource
         return [
             'id' => (string) $this->id,
             'type' => $this->type,
-            'attributes' => [
-                'name' => $this->name,
-                'email' => $this->email,
-                'address' => $this->address,
-                'city' => $this->city,
-                'state' => $this->state,
-                'postalCode' => $this->postal_code
-            ]
+            'name' => $this->name,
+            'email' => $this->email,
+            'address' => $this->address,
+            'city' => $this->city,
+            'state' => $this->state,
+            'postal_code' => $this->postal_code
         ];
     }
 }
