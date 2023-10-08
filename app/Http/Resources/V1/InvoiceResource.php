@@ -16,10 +16,11 @@ class InvoiceResource extends JsonResource
     {
         return [
             'id' => (string) $this->id,
-            'customerId' => (string) $this->customer_id,
+            'customer_id' => (string) $this->customer_id,
             'amount' => $this->amount,
-            'billedDate' => $this->billed_date,
-            'paidDate' => $this->paid_date
+            'status' => $this->status,
+            'billed_date' => $this->billed_date,
+            'paid_date' => $this->paid_date
         ];
     }
 }
