@@ -23,11 +23,11 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'customer_id' => ['required'],
-           'amount' => ['required'],
+           'customer_id' => ['required', 'integer'],
+           'amount' => ['required', 'numeric'],
            'status' => ['required',  Rule::in(['P', 'B', 'V', 'p', 'b', 'v'])],
-           'billed_date' => ['required'],
-           'paid_date' => ['nullable']
+           'billed_date' => ['required', 'date_format:Y-m-d H:i:s'],
+           'paid_date' => ['date_format:Y-m-d H:i:s', 'nullable']
         ];
     }
 }

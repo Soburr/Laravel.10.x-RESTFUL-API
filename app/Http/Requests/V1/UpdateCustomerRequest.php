@@ -25,7 +25,7 @@ class UpdateCustomerRequest extends FormRequest
         return [
             'name' => ['required'],
             'type' => ['required', Rule::in(['I', 'B', 'i', 'b'])],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email|filter'],
             'address' => ['required'],
             'city' => ['required'],
             'state' => ['required'],

@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\V1;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Routing\SortedMiddleware;
+use Illuminate\Validation\Rule;
 
 class UpdateInvoiceRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +23,25 @@ class UpdateInvoiceRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+        $method = $this->method();
+
+        if ($method === 'PUT') {
+            return [
+               'customer_id' => ['required'],
+               'amount' => ['required'],
+               'status' => ['required', Rule::in(['B', 'P', 'V', 'b', 'p', 'v'])],
+               'billed_date' => ['required'],
+               'paid_date' => ['nullable']
+            ];
+        }else {
+            return [
+                'customer_id' => ['sometimes', 'required', 'integer'],
+                'amount' => ['sometimes', 'required', 'numeric'],
+                'status' => ['sometimes', 'required', Rule::in(['B', 'P', 'V', 'b', 'p', 'v'])],
+                'billed_date' => ['sometimes', 'required', 'date_format:Y-m-d H:i:s', 'nullable'],
+                'paid_date' => ['sometimes', 'nullable', 'date_format:Y-m-d H:i:s', 'nullable']
+             ];
+        }
+
     }
 }
