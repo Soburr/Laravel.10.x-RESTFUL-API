@@ -6,8 +6,10 @@ use App\Http\Requests\V1\UpdateInvoiceRequest;
 use App\Models\Invoice;
 use App\Http\Requests\V1\StoreInvoiceRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\BulkStoreInvoiceRequest;
 use App\Http\Resources\V1\InvoiceResource;
 use App\Http\Resources\V1\InvoiceCollection;
+use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -25,6 +27,11 @@ class InvoiceController extends Controller
     public function store(StoreInvoiceRequest $request)
     {
        return new InvoiceResource(Invoice::create($request->all()));
+    }
+
+    public function bulkStore(BulkStoreInvoiceRequest $request)
+    {
+        // return new InvoiceResource(Invoice::create($request->all()));
     }
 
     /**
