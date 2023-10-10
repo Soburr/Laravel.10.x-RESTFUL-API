@@ -46,31 +46,4 @@ Route::get('/setup', function() {
 
 });
 
-Route::get('/setup', function() {
-    $credentials = [
-       'email' => 'admin@admin.test',
-       'password' => 'password'
-    ];
-
-    if(!Auth::attempt($credentials)) {
-       $user = new User;
-
-       $user->name = 'Admin';
-       $user->email = $credentials['email'];
-       $user->password = Hash::make($credentials['password']);
-
-       $user->save();
-
-    if(Auth::attempt($credentials)) {
-       $user = Auth::user();
-
-       $token = $user->createToken('token', ['create', 'update', 'delete'])->plainTextToken;
-
-       return [
-           'token' => $token,
-       ];
-    }
-    }
-});
-
 require __DIR__.'/auth.php';
