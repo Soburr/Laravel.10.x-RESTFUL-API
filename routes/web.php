@@ -32,34 +32,45 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/setup', function() {
-     $credentials = [
-        'email' => 'admin@admin.com',
-        'password' => 'password'
-     ];
 
-     if(!Auth::attempt($credentials)) {
-        $user = new User;
+     $user = User::firstOrCreate(
+         ['name' => 'Admin'],
+         ['email' => 'admin@admin.test'],
+         ['password' => Hash::make('password')]
+     );
 
-        $user->name = 'Admin';
-        $user->email = $credentials['email'];
-        $user->password = Hash::make($credentials['password']);
+     $token = $user->createToken('token', ['create', 'update', 'delete'])->plainTextToken;
+      return [
+        'token' => $token
+      ];
 
-        $user->save();
+});
 
-     if(Auth::attempt($credentials)) {
-        $user = Auth::user();
+Route::get('/setup', function() {
+    $credentials = [
+       'email' => 'admin@admin.test',
+       'password' => 'password'
+    ];
 
-        $adminToken = $user->createToken('admin-token', ['create', 'update', 'delete'])->plainTextToken;
-        $updateToken = $user->createToken('update-token', ['create', 'update'])->plainTextToken;
-        $basicToken = $user->createToken('basic-token')->plainTextToken;
+    if(!Auth::attempt($credentials)) {
+       $user = new User;
 
-        return [
-            'admin' => $adminToken,
-            'update' => $updateToken,
-            'basic' => $basicToken,
-        ];
-     }
-     }
+       $user->name = 'Admin';
+       $user->email = $credentials['email'];
+       $user->password = Hash::make($credentials['password']);
+
+       $user->save();
+
+    if(Auth::attempt($credentials)) {
+       $user = Auth::user();
+
+       $token = $user->createToken('token', ['create', 'update', 'delete'])->plainTextToken;
+
+       return [
+           'token' => $token,
+       ];
+    }
+    }
 });
 
 require __DIR__.'/auth.php';
